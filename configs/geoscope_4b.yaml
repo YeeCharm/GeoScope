@@ -1,0 +1,70 @@
+# Public experimental configuration for GeoScope-4B (matching paper Sec. 4, Sec. 5.1, and Appendix C).
+model:
+  backbone: Qwen/Qwen3.5-4B
+  vision_encoder_frozen: true
+  mask_token: "<|mask|>"
+  mask_decoder: native_patch_grid_decoder
+  precision: bfloat16
+
+image:
+  min_pixels: 262144
+  max_pixels: 1048576
+
+planner:
+  adaptation: language_lora
+  objective: next_token_cross_entropy
+  serialization:
+    fields:
+      - targets
+      - groups
+
+renderer:
+  adaptation:
+    - language_lora
+    - mask_decoder
+  readout: joint_causal_mask_token
+  lora:
+    rank: 64
+    alpha: 128
+    dropout: 0.05
+  optimization:
+    optimizer: AdamW
+    betas: [0.9, 0.95]
+    weight_decay: 0.0
+    grad_clip_norm: 1.0
+    effective_batch_size: 64
+    warmup_ratio: 0.03
+    lr_schedule: cosine
+    min_lr_ratio: 0.01
+    peak_lr_lora: 2.0e-4
+    peak_lr_mask_decoder: 2.0e-5
+  loss:
+    token_ce_weight: 1.0
+    mask_bce_weight: 1.0
+    mask_dice_weight: 1.0
+  decoding:
+    mask_threshold: 0.5
+    group_assembly: binary_union
+
+evaluation:
+  geoscope_bench:
+    splits: [development, test]
+    transformations:
+      - identity
+      - extent
+      - membership
+      - partition
+      - paraphrase
+    group_matching: hungarian_max_iou
+    group_iou_threshold: 0.50
+    relation_iou_threshold: 0.70
+    extent_containment_threshold: 0.90
+    identity_margin_cap: 0.05
+  public_benchmarks:
+    reasoning:
+      - EarthReason
+      - LaSeRS
+    zero_shot_referring:
+      - RRSIS-D
+      - RISBench
+      - RefSegRS

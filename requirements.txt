@@ -1,0 +1,5 @@
+# Lightweight dependencies for the GeoScope-Bench evaluation and schema toolkit.
+numpy>=1.24.0
+pillow>=10.0.0
+pyyaml>=6.0.0
+scipy>=1.10.0

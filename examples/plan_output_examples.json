@@ -1,0 +1,46 @@
+[
+  {
+    "example": "separate_same_category_targets",
+    "instruction": "Outline each of the two outermost complete tennis courts as a separate mask.",
+    "plan": {
+      "targets": [
+        {"id": 1, "description": "tennis court"},
+        {"id": 2, "description": "tennis court"}
+      ],
+      "groups": [
+        {"group_id": 1, "target_ids": [1]},
+        {"group_id": 2, "target_ids": [2]}
+      ]
+    },
+    "note": "Identical target descriptors are disambiguated in causal sequence order via Joint Mask-Token Readout."
+  },
+  {
+    "example": "grouped_and_separate_partition",
+    "instruction": "Merge the two ships at the left pier into one mask and return the ship at the right pier as a second mask.",
+    "plan": {
+      "targets": [
+        {"id": 1, "description": "ship"},
+        {"id": 2, "description": "ship"},
+        {"id": 3, "description": "ship"}
+      ],
+      "groups": [
+        {"group_id": 1, "target_ids": [1, 2]},
+        {"group_id": 2, "target_ids": [3]}
+      ]
+    },
+    "note": "Group 1 takes the binary union of decoded atomic masks 1 and 2; Group 2 outputs atomic mask 3 directly."
+  },
+  {
+    "example": "whole_to_part_extent",
+    "instruction": "Mark only the playing surface inside the complete track-and-field facility.",
+    "plan": {
+      "targets": [
+        {"id": 1, "description": "playing surface inside the complete track-and-field facility"}
+      ],
+      "groups": [
+        {"group_id": 1, "target_ids": [1]}
+      ]
+    },
+    "note": "Single-target plans reduce joint readout to a single target segment with full instruction context."
+  }
+]
