@@ -2,20 +2,6 @@
 
 <h1>GeoScope: What to Mask and What to Merge in Remote Sensing Reasoning Segmentation</h1>
 
-<p>
-  <strong>Yichang Luo</strong><sup>1,2</sup>,
-  <strong>Shixiong Liu</strong><sup>1&dagger;</sup>,
-  <strong>Kan Wei</strong><sup>1,2</sup>,
-  <strong>Yan Zhao</strong><sup>1,2</sup>,
-  <strong>Boxiang Yang</strong><sup>3</sup>,
-  <strong>Lei Wang</strong><sup>1,2</sup>
-</p>
-<p>
-  <sup>1</sup>Aerospace Information Research Institute, Chinese Academy of Sciences<br />
-  <sup>2</sup>University of Chinese Academy of Sciences &nbsp;&nbsp;
-  <sup>3</sup>Peking University
-</p>
-
 [![Paper](https://img.shields.io/badge/arXiv-Coming%20Soon-B31B1B?style=flat-square)](#citation)
 [![Backbone](https://img.shields.io/badge/Backbone-Qwen3.5--4B-0F4C81?style=flat-square)](#experimental-configuration)
 [![Benchmark](https://img.shields.io/badge/Benchmark-GeoScope--Bench%20(Coming%20Soon)-0D9488?style=flat-square)](#geoscope-bench)
@@ -34,11 +20,11 @@
 
 ## Release Roadmap
 
-- [x] Project overview, experimental configurations (`configs/`), and benchmark results
-- [x] Standalone **GeoScope-Bench** evaluation metrics & schema auditor (`eval/`) and format examples (`examples/`)
-- [ ] Full **GeoScope-Bench** dataset (851 pairs, 1,692 instructions across 404 aerial images) on Hugging Face — *to be released upon paper decision*
-- [ ] Core **GeoScope** planner/renderer training and inference code — *to be released upon paper decision*
-- [ ] Pretrained **GeoScope-4B** checkpoints on Hugging Face
+- [x] Project overview, configs (`configs/`), and sample schemas (`examples/`)
+- [x] **GeoScope-Bench** evaluation & schema toolkit (`eval/`)
+- [ ] Full **GeoScope-Bench** dataset *(upon paper decision)*
+- [ ] **GeoScope** training and inference code *(upon paper decision)*
+- [ ] Pretrained **GeoScope-4B** checkpoints
 
 ## Overview
 
@@ -128,9 +114,14 @@ Sample paired records covering all five transformations are provided in [`exampl
 
 ## Results
 
-**GeoScope-4B** substantially leads all compared methods on **GeoScope-Bench** (**61.85%** Group gIoU / **49.33%** Pair Success, +30.66 pp Pair Success over the second-best method), achieves **78.53%** average score on **EarthReason** (+2.00 pp over the strongest baseline), and reaches **46.88%** average across three zero-shot remote sensing referring segmentation benchmarks (+9.09 pp over VisionReasoner-7B).
+<p align="center">
+  <a href="assets/qualitative.webp">
+    <img src="assets/qualitative.webp" alt="Qualitative comparisons on GeoScope-Bench" width="100%" />
+  </a>
+</p>
 
-### GeoScope-Bench Test (%)
+<details>
+<summary><strong>GeoScope-Bench Test (%)</strong></summary>
 
 The five transformation columns report **Group gIoU**. **Bold** and <u>underline</u> denote the best and second-best scores per column.
 
@@ -149,59 +140,21 @@ The five transformation columns report **Group gIoU**. **Bold** and <u>underline
 | RemoteReasoner-7B | 37.52 | 47.88 | 26.23 | 30.60 | 52.16 | 37.98 / 42.27 | 17.33 |
 | **GeoScope-4B (Ours)** | **66.90** | **58.35** | **58.67** | **60.94** | **62.88** | **61.85** / **60.46** | **49.33** |
 
-### Public Remote Sensing Benchmarks (%)
-
-<details open>
-<summary><strong>EarthReason (Reasoning Segmentation) &amp; Zero-Shot Referring Segmentation</strong></summary>
-
-#### EarthReason
-
-| Method | Val gIoU | Val cIoU | Test gIoU | Test cIoU | Avg. |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| LISA | 61.00 | 57.40 | 60.90 | 59.10 | 59.60 |
-| Seg-Zero | 67.20 | 65.40 | 67.90 | 62.40 | 65.73 |
-| VisionReasoner | 66.60 | 67.10 | 67.20 | 65.40 | 66.58 |
-| RemoteReasoner | 69.00 | 67.80 | 71.00 | 69.10 | 69.23 |
-| SegEarth-R1 | 70.65 | 62.48 | 70.36 | 65.04 | 67.13 |
-| Text4Seg++ | 71.90 | 69.80 | 73.00 | 65.60 | 70.08 |
-| SegEarth-R2 | 72.30 | 68.10 | 73.50 | 69.50 | 70.85 |
-| UniGeoSeg | 72.54 | 73.30 | 73.08 | 74.61 | 73.38 |
-| Think2Seg-RS-7B | 72.16 | 72.87 | 73.36 | 75.60 | 73.50 |
-| FIRM-4B | <u>76.50</u> | <u>77.50</u> | <u>76.20</u> | <u>75.90</u> | <u>76.53</u> |
-| **GeoScope-4B (Ours)** | **77.10** | **78.82** | **77.76** | **80.43** | **78.53** |
-
-#### Zero-Shot Referring Segmentation (Test Splits)
-
-| Method | RRSIS-D gIoU | RRSIS-D cIoU | RISBench gIoU | RISBench cIoU | RefSegRS gIoU | RefSegRS cIoU | Avg. |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| GSVA-7B | 27.44 | 32.62 | 26.26 | 29.76 | 8.83 | 17.85 | 23.79 |
-| PixelLM-7B | 30.61 | 32.36 | 31.51 | 26.75 | 15.35 | **23.84** | 26.73 |
-| LISA+-7B | 37.83 | 46.30 | 39.18 | 44.69 | 8.96 | 12.06 | 31.50 |
-| MLLMSeg-4B | 40.28 | 47.00 | 41.25 | <u>54.69</u> | 8.51 | 12.84 | 34.09 |
-| RemoteReasoner-7B | 40.39 | 40.71 | 40.61 | 38.12 | 12.14 | 15.24 | 31.20 |
-| Seg-R1-7B | 41.91 | 42.00 | 45.53 | 43.89 | 13.72 | 18.63 | 34.28 |
-| VisionReasoner-7B | 45.11 | 48.30 | <u>48.59</u> | 46.54 | **18.17** | <u>20.03</u> | <u>37.79</u> |
-| Think2Seg-RS-7B | <u>46.40</u> | <u>53.07</u> | 45.28 | 43.99 | 15.13 | 17.82 | 36.95 |
-| **GeoScope-4B (Ours)** | **58.18** | **64.05** | **62.54** | **64.82** | <u>16.39</u> | 15.30 | **46.88** |
-
 </details>
 
-<details>
-<summary><strong>Component Ablation on GeoScope-Bench Test (Same Qwen3.5-4B Backbone &amp; Training Data)</strong></summary>
-
-| Planning | Joint Readout | Membership gIoU | Membership cIoU | Membership Pair | Overall Group gIoU |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| &#10007; | &#10007; | 41.96 | 35.17 | 3.13 | 57.08 |
-| &#10003; | &#10007; | 48.79 | 36.45 | 6.25 | 57.26 |
-| **&#10003;** | **&#10003;** | **58.67** | **46.70** | **40.63** | **61.85** |
-
-</details>
-
-### Qualitative Comparisons
+### EarthReason
 
 <p align="center">
-  <a href="assets/qualitative.webp">
-    <img src="assets/qualitative.webp" alt="Qualitative comparisons on GeoScope-Bench" width="100%" />
+  <a href="assets/earthreason.webp">
+    <img src="assets/earthreason.webp" alt="Qualitative results on EarthReason" width="100%" />
+  </a>
+</p>
+
+### Zero-Shot Referring Segmentation (RRSIS-D)
+
+<p align="center">
+  <a href="assets/rrsisd.webp">
+    <img src="assets/rrsisd.webp" alt="Qualitative results on RRSIS-D" width="100%" />
   </a>
 </p>
 
@@ -214,7 +167,7 @@ GeoScope/
 ├── README.md                              # Project overview, benchmark details, and results
 ├── LICENSE                                # Apache License 2.0
 ├── requirements.txt                       # Lightweight dependencies for evaluation tools
-├── assets/                                # Paper figures (motivation, method, dataset, qualitative)
+├── assets/                                # Paper figures (motivation, method, dataset, qualitative, EarthReason, RRSIS-D)
 ├── configs/
 │   └── geoscope_4b.yaml                   # Public experimental configuration for GeoScope-4B
 ├── eval/
