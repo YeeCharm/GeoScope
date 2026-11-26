@@ -242,8 +242,6 @@ python -m eval.score_predictions \
 We thank the authors and communities behind the following open-source datasets and base models:
 
 - **NWPU-VHR-10** & **SCORE** — source imagery and instance annotations used in constructing GeoScope-Bench
-- **EarthReason ([SegEarth-R1](https://github.com/earth-insights/SegEarth-R1))** & **LaSeRS ([SegEarth-R2](https://github.com/earth-insights/SegEarth-R2))** — remote sensing reasoning segmentation benchmarks
-- **RRSIS-D**, **RISBench**, & **RefSegRS** — remote sensing referring segmentation benchmarks
 - **[Qwen3.5](https://huggingface.co/Qwen)** — open-weight multimodal backbone
 
 ## Citation
