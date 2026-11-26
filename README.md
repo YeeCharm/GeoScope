@@ -199,6 +199,47 @@ python -m eval.score_predictions --self-test
 
 ## Evaluation
 
+### Benchmark Data Layout
+
+Download the public evaluation benchmarks from their official releases and organize them alongside **GeoScope-Bench** under `data/`:
+
+- **GeoScope-Bench** *(coming soon)* — 851 pairs (`development` / `test`)
+- **[EarthReason](https://huggingface.co/datasets/earth-insights/EarthReason)** — remote sensing reasoning segmentation (`train` / `val` / `test`)
+- **[LaSeRS](https://huggingface.co/datasets/earth-insights/LaSeRS)** — multi-granularity remote sensing reasoning segmentation (`train` / `test`)
+- **[RRSIS-D](https://github.com/Lsan2401/RMSIN)** — zero-shot referring segmentation (`test`)
+- **[RISBench](https://github.com/HIT-SIRS/CroBIM)** — zero-shot referring segmentation (`test`)
+- **[RefSegRS](https://huggingface.co/datasets/JessicaYuan/RefSegRS)** — zero-shot referring segmentation (`test`)
+
+```text
+data/
+├── geoscope_bench/
+│   ├── development.jsonl            # 701 pairs (1,392 distinct instructions, 345 images)
+│   ├── test.jsonl                   # 150 pairs (300 distinct instructions, 59 images)
+│   ├── images/                      # Source aerial imagery (NWPU-VHR-10)
+│   └── masks/                       # Reference atomic target masks (PNG)
+├── rs_reason_seg/
+│   ├── EarthReason/
+│   │   ├── train/
+│   │   ├── val/
+│   │   └── test/
+│   └── LaSeRS/
+│       ├── train/
+│       └── test/
+└── rs_ref_seg/
+    ├── RRSIS-D/
+    │   ├── images/
+    │   └── rrsisd/
+    ├── RISBench/
+    │   ├── images/
+    │   └── annotations/
+    └── RefSegRS/
+        ├── images/
+        ├── masks/
+        ├── output_phrase_train.txt
+        ├── output_phrase_val.txt
+        └── output_phrase_test.txt
+```
+
 ### Evaluation Protocol
 
 - **Foreground vs. Group Scores**: **Union gIoU/cIoU** evaluates merged foreground coverage; **Group gIoU/cIoU** performs one-to-one maximum-sum-IoU Hungarian matching between predicted and reference output masks, accounting for unmatched groups in both the gIoU denominator $\max(n,m,1)$ and the pooled cIoU union.
