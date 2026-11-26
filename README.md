@@ -70,7 +70,7 @@ When asked for a separate mask for each outermost complete tennis court, returni
 **GeoScope-Bench** evaluates scope-aware instruction execution using **851 same-image instruction pairs** (**1,692 distinct instructions** across **404 aerial images** curated from NWPU-VHR-10 and SCORE) spanning five controlled transformations:
 
 | Transformation | What Changes | Development Pairs | Test Pairs | Total Pairs |
-| :---: | :--- | :---: | :---: | :---: |
+| :---: | :---: | :---: | :---: | :---: |
 | **Identity** | Parallel spatial qualifier switches the target instance | 167 | 33 | 200 |
 | **Extent** | Whole-to-part revision narrows the spatial extent | 40 | 19 | 59 |
 | **Membership** | Adds an eligible instance as a separate output mask | 166 | 32 | 198 |
