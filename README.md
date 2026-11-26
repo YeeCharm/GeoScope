@@ -22,8 +22,8 @@
 
 - [x] Project overview, configs (`configs/`), and sample schemas (`examples/`)
 - [x] **GeoScope-Bench** evaluation & schema toolkit (`eval/`)
-- [ ] Full **GeoScope-Bench** dataset *(upon paper decision)*
-- [ ] **GeoScope** training and inference code *(upon paper decision)*
+- [ ] Full **GeoScope-Bench** dataset
+- [ ] **GeoScope** training and inference code
 - [ ] Pretrained **GeoScope-4B** checkpoints
 
 ## Overview
